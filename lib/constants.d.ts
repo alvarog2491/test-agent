@@ -1,0 +1,18 @@
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+export declare const APP_NAME = "enterprise-bedrock-agent";
+export declare const AGENT_NAME = "bedrock-agent";
+export declare const DOMAIN = "general business";
+export declare const LAMBDA_PYTHON_RUNTIME: lambda.Runtime;
+export declare const PROMPT_MIN_LENGTH = 1;
+export declare const PROMPT_MAX_LENGTH = 500;
+export declare const AGENT_MODEL = "anthropic.claude-3-haiku-20240307-v1:0";
+export declare const AGENT_MODEL_INPUT_TOKEN_PRICE = 0.0008;
+export declare const AGENT_MODEL_OUTPUT_TOKEN_PRICE = 0.0032;
+export declare const EMBEDDING_MODEL = "amazon.titan-embed-text-v1";
+export declare const EMBEDDING_MODEL_INPUT_TOKEN_PRICE = 0.0009;
+export declare const EMBEDDING_MODEL_OUTPUT_TOKEN_PRICE = 0.0022;
+export declare const EVALUATION_JUDGE_MODEL = "anthropic.claude-sonnet-4-5-20250929-v1:0";
+export declare const EVALUATION_JUDGE_INPUT_TOKEN_PRICE = 0.0078;
+export declare const EVALUATION_JUDGE_OUTPUT_TOKEN_PRICE = 0.0042;
+export declare const ALLOWED_ORIGINS_DEV: string[];
+export declare const ALLOWED_ORIGINS_PROD: string[];
