@@ -1,0 +1,62 @@
+name: Deploy Bedrock Agent
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # Phase 1: Run Tests
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Read Python Version
+        id: python-version
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ steps.python-version.outputs.version }}
+
+      - name: Install Test Dependencies
+        run: pip install -r test/requirements.txt
+
+      - name: Run Lambda Tests
+        run: python -m pytest test/lambda/ -v --tb=short
+
+  # Deploy (only after tests pass)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Read Node Version
+        id: node-version
+        run: echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsRole
+          aws-region: us-east-1
+
+      - name: Deploy to AWS
+        run: npx cdk deploy --all --require-approval never -c env=prod
