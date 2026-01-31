@@ -1,0 +1,7 @@
+pandas
+langchain-community
+ragas==0.4.3
+boto3
+litellm
+instructor
+rapidfuzz

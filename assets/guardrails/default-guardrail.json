@@ -1,0 +1,40 @@
+{
+    "name": "agent-guardrail",
+    "description": "Standard guardrail for the agent",
+    "contentPolicyConfig": {
+        "filtersConfig": [
+            {
+                "type": "HATE",
+                "inputStrength": "HIGH",
+                "outputStrength": "HIGH"
+            },
+            {
+                "type": "INSULTS",
+                "inputStrength": "HIGH",
+                "outputStrength": "HIGH"
+            },
+            {
+                "type": "SEXUAL",
+                "inputStrength": "HIGH",
+                "outputStrength": "HIGH"
+            },
+            {
+                "type": "VIOLENCE",
+                "inputStrength": "HIGH",
+                "outputStrength": "HIGH"
+            },
+            {
+                "type": "MISCONDUCT",
+                "inputStrength": "HIGH",
+                "outputStrength": "HIGH"
+            },
+            {
+                "type": "PROMPT_ATTACK",
+                "inputStrength": "HIGH",
+                "outputStrength": "NONE"
+            }
+        ]
+    },
+    "blockedInputMessaging": "I'm sorry, I cannot process this request because it violates our safety policies.",
+    "blockedOutputsMessaging": "I'm sorry, I cannot provide a response because it violates our safety policies."
+}
